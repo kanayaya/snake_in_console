@@ -73,12 +73,16 @@ class Menu():
 def change_menu(menu_dict, dict_key):
     return menu_dict[dict_key]
 
-def exit_game(*no_args_but_they_will_come):
+def exit_game(*no_args_needed_but_they_will_come):
     keyboard.press_and_release('Ctrl + shift + c')
 
 
 newgame_settings_list = []
-lose_menu_list = []
+lose_menu_list = [
+    'Вы проиграли, ваш счёт:   ',
+    ['Новая игра', True, change_menu, 'new_game'],
+    ['Выход', False, exit_game, 'no'],
+]
 options_menu_list = [
     'Настройки',
     ['Настройки', True, change_menu, 'options'],
@@ -100,5 +104,6 @@ all_menus_dict = {
     'new_game' : newgame_settings_list,
 }
 
-menu_object = Menu(all_menus_dict)
-menu_object.start()
+if __name__ == "__main__":
+    menu_object = Menu(all_menus_dict)
+    menu_object.start()

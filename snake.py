@@ -110,6 +110,42 @@ def Collision():
         print(10 * '\n')
         sys.exit()
 
+def start_game(map):
+    map = map.split(',')
+    # for i in range(len(firstMap)):
+    #    firstMap[i] = firstMap[i].split(' ')
+    map = [i.split(' ') for i in map]
+
+    blacklist = []
+    for i in range(len(map)):
+        for j in range(len(map[i])):
+            if map[i][j] == '1':
+                blacklist.append([j, i])
+
+    Nsnake = Snake()
+    Build_map(map)
+    Nsnake.New_snake()
+    food = Set_food()
+    vmap = View_objects(map)
+    ReshowMap(vmap)
+    print('Нажмите Shift')
+    keyboard.wait('Shift')
+    while True:
+        Collision()
+        food = Food_getting(food)
+        vmap = View_objects(map)
+        os.system('cls')
+        print(10 * '\n')
+        ReshowMap(vmap)
+        keyboard.on_press(Nsnake.Manage)
+        sleep(0.2)
+        Nsnake.Move()
+        if Nsnake.bbreak:
+            break
+
+    os.system('cls')
+    sys.exit()
+
 
 #menu will be added later
 if __name__ == '__main__':
@@ -126,37 +162,4 @@ if __name__ == '__main__':
 1 0 0 0 0 0 0 0 0 1,\
 1 1 1 1 1 1 1 1 1 1'
 
-    firstMap = firstMap.split(',')
-    #for i in range(len(firstMap)):
-    #    firstMap[i] = firstMap[i].split(' ')
-    firstMap = [i.split(' ') for i in firstMap]
-
-    blacklist = []
-    for i in range(len(firstMap)):
-        for j in range(len(firstMap[i])):
-            if firstMap[i][j] == '1':
-                blacklist.append([j, i])
-
-    Nsnake = Snake()
-    Build_map(firstMap)
-    Nsnake.New_snake()
-    food = Set_food()
-    vmap = View_objects(firstMap)
-    ReshowMap(vmap)
-    print('Нажмите Shift')
-    keyboard.wait('Shift')
-    while True:
-        Collision()
-        food = Food_getting(food)
-        vmap = View_objects(firstMap)
-        os.system('cls')
-        print(10 * '\n')
-        ReshowMap(vmap)
-        keyboard.on_press(Nsnake.Manage)
-        sleep(0.2)
-        Nsnake.Move()
-        if Nsnake.bbreak:
-            break
-
-    os.system('cls')
-    sys.exit()
+    start_game(firstMap)
