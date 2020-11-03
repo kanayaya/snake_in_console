@@ -6,7 +6,7 @@ import keyboard
 class Menu():
     def __init__(self, menu_dict):
         self.menu_dict = menu_dict
-        self.current_menu = change_menu(self, 'main_menu')
+        self.current_menu = change_menu(self.menu_dict, 'main_menu')
 
     def start(self):
         self.show_menu()
@@ -42,7 +42,7 @@ class Menu():
             for i in range(1, len(self.current_menu)):
                 if self.current_menu[i][1]:
                     os.system('cls')
-                    self.current_menu = self.current_menu[i][2](self, self.current_menu[i][3])
+                    self.current_menu = self.current_menu[i][2](self.menu_dict, self.current_menu[i][3])
                     self.show_menu()
                     break
 
@@ -70,36 +70,35 @@ class Menu():
 
         return  self.current_menu
 
-def change_menu(self, dict_key):
-    return self.menu_dict[dict_key]
+def change_menu(menu_dict, dict_key):
+    return menu_dict[dict_key]
 
 def exit_game(*no_args_but_they_will_come):
     keyboard.press_and_release('Ctrl + shift + c')
 
 
-if __name__ == '__main__':
-    newgame_settings_list = []
-    lose_menu_list = []
-    options_menu_list = [
-        'Настройки',
-        ['Настройки', True, change_menu, 'options'],
-        ['Настройки', False, change_menu, 'options'],
-        ['Настройки', False, change_menu, 'options'],
-    ]
+newgame_settings_list = []
+lose_menu_list = []
+options_menu_list = [
+    'Настройки',
+    ['Настройки', True, change_menu, 'options'],
+    ['Настройки', False, change_menu, 'options'],
+    ['Настройки', False, change_menu, 'options'],
+]
 
-    main_menu_list = [
-        'Главное меню',
-        ['Новая игра', True, change_menu, 'new_game'],
-        ['Рекорды', False, change_menu, 'scores'],
-        ['Настройки', False, change_menu, 'options'],
-        ['Выход', False, exit_game, 'no'],
-    ]
+main_menu_list = [
+    'Главное меню',
+    ['Новая игра', True, change_menu, 'new_game'],
+    ['Рекорды', False, change_menu, 'scores'],
+    ['Настройки', False, change_menu, 'options'],
+    ['Выход', False, exit_game, 'no'],
+]
 
-    all_menus_dict = {
-        'main_menu' : main_menu_list,
-        'options' : options_menu_list,
-        'new_game' : newgame_settings_list,
-    }
+all_menus_dict = {
+    'main_menu' : main_menu_list,
+    'options' : options_menu_list,
+    'new_game' : newgame_settings_list,
+}
 
-    menu_object = Menu(all_menus_dict)
-    menu_object.start()
+menu_object = Menu(all_menus_dict)
+menu_object.start()
