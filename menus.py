@@ -73,7 +73,7 @@ class Menu():
 def change_menu(self, dict_key):
     return self.menu_dict[dict_key]
 
-def exit_game(*no):
+def exit_game(*no_args_but_they_will_come):
     keyboard.press_and_release('Ctrl + shift + c')
 
 
