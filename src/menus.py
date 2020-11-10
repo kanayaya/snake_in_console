@@ -1,9 +1,7 @@
 import os, sys
 
-import keyboard
 
-
-class Menu():
+class Menu:
     def __init__(self, menu_dict):
         self.menu_dict = menu_dict
         self.current_menu = change_menu(self.menu_dict, 'main_menu')
@@ -69,6 +67,7 @@ def change_menu(menu_dict, dict_key):
     return menu_dict[dict_key]
 
 def exit_game(*no_args_needed_but_they_will_come):
+    os.system('cls')
     keyboard.press_and_release('Ctrl + shift + c')
 
 

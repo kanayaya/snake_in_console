@@ -1,3 +1,4 @@
+import os
 import keyboard
 
 import menus
@@ -11,6 +12,7 @@ class MainManager:
         self.key_of_choise = 0
         keyboard.on_press(lambda key: self.choose_manager(key))
         keyboard.wait('esc')
+        os.system('cls')
 
     def choose_manager(self, key):
         if self.key_of_choise == 0:
