@@ -8,11 +8,6 @@ class Menu():
         self.menu_dict = menu_dict
         self.current_menu = change_menu(self.menu_dict, 'main_menu')
 
-    def start(self):
-        self.show_menu()
-        keyboard.on_press(self.manage_menu)
-        keyboard.wait('esc')
-
     def show_menu(self):
         """Показывает меню, выбранным считается пункт со вторым пунктом True"""
         os.system('cls')
