@@ -71,7 +71,12 @@ def exit_game(*no_args_needed_but_they_will_come):
     keyboard.press_and_release('Ctrl + shift + c')
 
 
-newgame_settings_list = []
+newgame_settings_list = [
+    'Выберите сложность:',
+    ['Лёгкая', True],
+    ['Средняя', False],
+    ['Сложная', False],
+]
 lose_menu_list = [
     'Вы проиграли, ваш счёт:   ',
     ['Новая игра', True, change_menu, 'new_game'],

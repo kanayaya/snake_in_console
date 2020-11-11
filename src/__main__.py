@@ -17,6 +17,12 @@ class MainManager:
     def choose_manager(self, key):
         if self.key_of_choise == 0:
             self.menu_object.manage_menu(key)
+        elif self.key_of_choise == 1:
+            snake.start_game()
+            self.key_of_choise = 2
+            self.choose_manager('shift')
+        elif self.key_of_choise == 2:
+            snake.Snake
 
 
 if __name__ == '__main__':

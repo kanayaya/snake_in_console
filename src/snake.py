@@ -25,7 +25,6 @@ class Snake:
         self.head = [(self.head[0]+self.direction[0]), (self.head[1]+self.direction[1])]
 
     def manage(self, key):
-
         managing_keys_dict = {
             'w' : [0, -1],
             'a' : [-1, 0],
@@ -102,7 +101,7 @@ def lose_game():
     print(10 * '\n')
     sys.exit()
 
-def start_game():
+def start_game(new_snake):
     first_map = '1 1 1 1 1 1 1 1 1 1,\
 1 0 0 0 0 0 0 0 0 1,\
 1 0 0 0 0 0 0 0 0 1,\
@@ -127,7 +126,6 @@ def start_game():
 
     current_map = build_map(current_map)
 
-    new_snake = Snake()
     food = set_food(map_lengh, map_width, blacklist, new_snake)
     viewed_map = view_objects(current_map, new_snake, food)
     show_map(viewed_map, new_snake.counter)
@@ -148,7 +146,8 @@ def start_game():
             break
 
 if __name__ == '__main__':
-    start_game()
+    new_snake = Snake()
+    start_game(new_snake)
 
 #
 #     os.system('cls')
