@@ -7,14 +7,14 @@ import keyboard
 
 
 class Snake:
-    def __init__(self, snake):
+    def __init__(self):
         self.head = [3, 1]
         self.body = [[2, 1], [1, 1]]
         self.direction = [1, 0]# -- вправо, [0, 1] -- вниз, [-1, 0] -- влево, [0, -1] -- вверх
         self.bbreak = False
         self.counter = 0
 
-    def Move(self):
+    def move(self):
         '''Приравнивает координаты сзадистоящих блоков тела к впередистоящим.
         координаты самого переднего блока приравнивает к координатам головы,
         а координаты головы модифицирует с помощью переменной direction.
@@ -24,7 +24,7 @@ class Snake:
         self.body[0] = self.head
         self.head = [(self.head[0]+self.direction[0]), (self.head[1]+self.direction[1])]
 
-    def Manage(self, key):
+    def manage(self, key):
 
         managing_keys_dict = {
             'w' : [0, -1],
@@ -55,13 +55,14 @@ def build_map(maplist):
             maplist[i][j] = maplist[i][j].replace('0', ' ')
     return maplist
 
-def view_objects(maplist, snake_head, snake_body, food):
+def view_objects(maplist, snake, food):
     """На уже построенной карте показывает змейку и еду, заменяя символы
     на заданных в объекте класса Snake и переменной food координатах"""
     vmap = copy.deepcopy(maplist)
-    vmap[snake_head[1]][snake_head[0]] =  vmap[snake_head[1]][snake_head[0]].replace(' ', 'O')
-    for i in range(len(snake_body)):
-        vmap[snake_body[i][1]][snake_body[i][0]] = vmap[snake_body[i][1]][snake_body[i][0]].replace(' ', '=')
+    vmap[snake.head[1]][snake.head[0]] =  vmap[snake.head[1]][snake.head[0]].replace(' ', 'O')
+    for i in range(len(snake.body)):
+        vmap[snake.body[i][1]][snake.body[i][0]] = vmap[snake.body[i][1]][snake.body[i][0]].replace(' ', '=')
+    print(food)
     vmap[food[1]][food[0]] = vmap[food[1]][food[0]].replace(' ', 'x')
     return vmap
 
@@ -76,22 +77,22 @@ def show_map(maplist, counter):
             row += ' '
         print(row)
 
-def set_food(map_lengh, map_width, blacklist, snake_head, snake_body):
+def set_food(map_lengh, map_width, blacklist, snake):
     """Задает положение еды"""
     while True:
-        food = [random.randint(0, map_lengh - 1), random.randint(0, map_width - 1)]
-        if food in snake_body or food == snake_head or food in blacklist:
+        food = [random.randint(0, map_lengh - 2), random.randint(0, map_width - 2)]
+        if food in snake.body or food == snake.head or food in blacklist:
             continue
         break
     return food
 
-def food_getting(snake_body, counter):
+def food_getting(map_lengh, map_width, blacklist, snake):
     """Действие если голова змеи наезжает на еду.
     меняет положение еды, удлинняет змейку"""
-    food = set_food()
-    snake_body.append(snake_body[-1])
-    counter += 1
-    return food, snake_body, counter
+    food = set_food(map_lengh, map_width, blacklist, snake)
+    snake.body.append(snake.body[-1])
+    snake.counter += 1
+    return food, snake
 
 def lose_game():
     """Действие при столкновении головы с препятствием или телом змейки"""
@@ -100,38 +101,55 @@ def lose_game():
     print(7 * '\t' + 'Проиграл))))')
     print(10 * '\n')
     sys.exit()
-#
-# def start_game(map):
-#     map = map.split(',')
-#     # for i in range(len(firstMap)):
-#     #    firstMap[i] = firstMap[i].split(' ')
-#     map = [i.split(' ') for i in map]
-#
-#     blacklist = []
-#     for i in range(len(map)):
-#         for j in range(len(map[i])):
-#             if map[i][j] == '1':
-#                 blacklist.append([j, i])
-#
-#     nsnake = Snake()
-#     Build_map(map)
-#     nsnake.New_snake()
-#     food = Set_food()
-#     vmap = View_objects(map)
-#     ReshowMap(vmap)
-#     print('Нажмите Shift')
-#     keyboard.wait('Shift')
-#     while True:
-#         Collision()
-#         food = Food_getting(food)
-#         vmap = View_objects(map)
-#         print(10 * '\n')
-#         ReshowMap(vmap)
-#         keyboard.on_press(nsnake.Manage)
-#         sleep(0.2)
-#         nsnake.Move()
-#         if nsnake.bbreak:
-#             break
+
+def start_game():
+    first_map = '1 1 1 1 1 1 1 1 1 1,\
+1 0 0 0 0 0 0 0 0 1,\
+1 0 0 0 0 0 0 0 0 1,\
+1 0 0 0 0 0 0 0 0 1,\
+1 0 0 0 0 0 0 0 0 1,\
+1 0 0 0 0 0 0 0 0 1,\
+1 0 0 0 0 0 0 0 0 1,\
+1 0 0 0 0 0 0 0 0 1,\
+1 0 0 0 0 0 0 0 0 1,\
+1 0 0 0 0 0 0 0 0 1,\
+1 1 1 1 1 1 1 1 1 1'
+    current_map = first_map.split(',')
+    current_map = [i.split(' ') for i in current_map]
+    map_lengh = len(current_map)
+    map_width = len(current_map[0])
+
+    blacklist = []
+    for i in range(len(current_map)):
+        for j in range(len(current_map[i])):
+            if current_map[i][j] == '1':
+                blacklist.append([j, i])
+
+    current_map = build_map(current_map)
+
+    new_snake = Snake()
+    food = set_food(map_lengh, map_width, blacklist, new_snake)
+    viewed_map = view_objects(current_map, new_snake, food)
+    show_map(viewed_map, new_snake.counter)
+    print('Нажмите Shift')
+    keyboard.wait('Shift')
+    keyboard.on_press(new_snake.manage)
+    while True:
+        if new_snake.head in blacklist or new_snake.head in new_snake.body:
+            lose_game()
+        if new_snake.head == food:
+            food, new_snake = food_getting(map_lengh, map_width, blacklist, new_snake)
+        viewed_map = view_objects(current_map, new_snake, food)
+        print(10 * '\n')
+        show_map(viewed_map, new_snake.counter)
+        sleep(0.2)
+        new_snake.move()
+        if new_snake.bbreak:
+            break
+
+if __name__ == '__main__':
+    start_game()
+
 #
 #     os.system('cls')
 #     sys.exit()
@@ -140,16 +158,6 @@ def lose_game():
 # #menu will be added later
 # if __name__ == '__main__':
 #
-#     first_map = '1 1 1 1 1 1 1 1 1 1,\
-# 1 0 0 0 0 0 0 0 0 1,\
-# 1 0 0 0 0 0 0 0 0 1,\
-# 1 0 0 0 0 0 0 0 0 1,\
-# 1 0 0 0 0 0 0 0 0 1,\
-# 1 0 0 0 0 0 0 0 0 1,\
-# 1 0 0 0 0 0 0 0 0 1,\
-# 1 0 0 0 0 0 0 0 0 1,\
-# 1 0 0 0 0 0 0 0 0 1,\
-# 1 0 0 0 0 0 0 0 0 1,\
-# 1 1 1 1 1 1 1 1 1 1'
+
 #
 #     start_game(first_map)
