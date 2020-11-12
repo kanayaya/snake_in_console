@@ -5,10 +5,11 @@ class Menu:
     def __init__(self, menu_dict):
         self.menu_dict = menu_dict
         self.current_menu = change_menu(self.menu_dict, 'main_menu')
+        self.exitvar = False
 
     def show_menu(self):
         """Показывает меню, выбранным считается пункт со вторым пунктом True"""
-        os.system('cls')
+        #os.system('cls')
         print(self.current_menu[0])
         print(10 * '\n')
         tab = 6 * '\t'

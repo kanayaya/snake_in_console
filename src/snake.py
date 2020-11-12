@@ -3,8 +3,6 @@ import sys, os
 import random
 from time import sleep
 
-import keyboard
-
 
 class Snake:
     def __init__(self):
@@ -67,7 +65,7 @@ def view_objects(maplist, snake, food):
 
 def show_map(maplist, counter):
     """Показывает конечный вид карты в виде сетки"""
-    os.system('cls')
+    #os.system('cls')
     print('Счет:  ' + str(counter))
     for i in range(len(maplist)):
         row = ''
@@ -129,34 +127,15 @@ def start_game(new_snake):
     food = set_food(map_lengh, map_width, blacklist, new_snake)
     viewed_map = view_objects(current_map, new_snake, food)
     show_map(viewed_map, new_snake.counter)
-    print('Нажмите Shift')
-    keyboard.wait('Shift')
-    keyboard.on_press(new_snake.manage)
-    while True:
-        if new_snake.head in blacklist or new_snake.head in new_snake.body:
-            lose_game()
-        if new_snake.head == food:
-            food, new_snake = food_getting(map_lengh, map_width, blacklist, new_snake)
-        viewed_map = view_objects(current_map, new_snake, food)
-        print(10 * '\n')
-        show_map(viewed_map, new_snake.counter)
-        sleep(0.2)
-        new_snake.move()
-        if new_snake.bbreak:
-            break
 
-if __name__ == '__main__':
-    new_snake = Snake()
-    start_game(new_snake)
+    return current_map, blacklist, map_lengh, map_width, food
 
-#
-#     os.system('cls')
-#     sys.exit()
-#
-#
-# #menu will be added later
-# if __name__ == '__main__':
-#
-
-#
-#     start_game(first_map)
+def do_step(new_snake, current_map, blacklist, map_lengh, map_width, food):
+    if new_snake.head in blacklist or new_snake.head in new_snake.body:
+        lose_game()
+    if new_snake.head == food:
+        food, new_snake = food_getting(map_lengh, map_width, blacklist, new_snake)
+    viewed_map = view_objects(current_map, new_snake, food)
+    print(10 * '\n')
+    show_map(viewed_map, new_snake.counter)
+    return food
