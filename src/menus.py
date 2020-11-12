@@ -48,6 +48,8 @@ class Menu:
                         break
                     elif len(self.current_menu[i]) == 2:
                         self.exitvar = True
+                        #os.system('cls')
+                        #sys.exit()
 
 
         else:
@@ -86,7 +88,7 @@ main_menu_list = [
     ['Новая игра', True, change_menu, 'new_game'],
     ['Рекорды # Пока не работает', False, change_menu, 'scores'],
     ['Настройки # Пока не работает', False, change_menu, 'options'],
-    ['Выход # Пока не работает', False],
+    ['Выход', False],
 ]
 newgame_settings_list = [
     'Выберите сложность:',

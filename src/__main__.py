@@ -15,11 +15,10 @@ class MainManager:
         self.key_of_choise = 0
         keyboard.on_press(lambda key: self.choose_manager(key))
         while True:    # Этот цикл позволяет начать игру и после проигрыша начать заново
-            if self.menu_object.exitvar:
-                print(111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111)
-                keyboard.press_and_release('Ctrl + Shift + c')
             while True:    # Этот цикл проверяет, хочет ли пользователь начать игру
                 sleep(0.3)
+                if self.menu_object.exitvar:
+                    keyboard.press_and_release('alt + f4')
                 if self.menu_object.launch_game_var:
                     break
             os.system('cls')   # отсюда
