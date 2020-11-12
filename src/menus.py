@@ -9,10 +9,10 @@ class Menu:
         self.difficulty = 0.2
         self.exitvar = False
 
-    def show_menu(self):
+    def show_menu(self, score):
         """Показывает меню, выбранным считается пункт со вторым пунктом True"""
         os.system('cls')
-        print(self.current_menu[0])
+        print(self.current_menu[0] + '  ' + score)
         print(10 * '\n')
         tab = 6 * '\t'
         for i in range(1, len(self.current_menu)):
@@ -32,7 +32,7 @@ class Menu:
         }
         if key.name in menu_keys_dict:
             self.current_menu = self.change_position(menu_keys_dict, key)
-            self.show_menu()
+            self.show_menu(' ')
 
         elif key.name == 'enter':
             for i in range(1, len(self.current_menu)):
@@ -40,7 +40,7 @@ class Menu:
                     if len(self.current_menu[i]) == 4:
                         os.system('cls')
                         self.current_menu = self.current_menu[i][2](self.menu_dict, self.current_menu[i][3])
-                        self.show_menu()
+                        self.show_menu(' ')
                         break
                     elif len(self.current_menu[i]) == 3:
                         self.difficulty = self.current_menu[i][2]
@@ -86,7 +86,6 @@ def exit_game(*no_args_needed_but_they_will_come):
 main_menu_list = [
     'Главное меню',
     ['Новая игра', True, change_menu, 'new_game'],
-    ['Рекорды # Пока не работает', False, change_menu, 'scores'],
     ['Настройки # Пока не работает', False, change_menu, 'options'],
     ['Выход', False],
 ]
@@ -95,12 +94,6 @@ newgame_settings_list = [
     ['Лёгкая', True, 0.4],
     ['Средняя', False, 0.3],
     ['Сложная', False, 0.2],
-]
-scores_list = [
-    'Рекорды',
-    ['Рекорды # Пока не работает', False, change_menu, 'scores'],
-    ['Рекорды # Пока не работает', False, change_menu, 'scores'],
-    ['Рекорды # Пока не работает', False, change_menu, 'scores'],
 ]
 options_menu_list = [
     'Настройки',

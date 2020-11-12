@@ -11,7 +11,7 @@ class MainManager:
         """Сразу и конструктор и функция, запускающая игру"""
         self.menu_object = menus.Menu(menus.all_menus_dict)
         self.new_snake = snake.Snake()
-        self.menu_object.show_menu()
+        self.menu_object.show_menu(' ')
         self.key_of_choise = 0
         keyboard.on_press(lambda key: self.choose_manager(key))
         while True:    # Этот цикл позволяет начать игру и после проигрыша начать заново
@@ -29,18 +29,16 @@ class MainManager:
             self.key_of_choise = 2    # Меняем управление меню на управление змейкой
             current_map, blacklist, map_lengh, map_width, food = snake.start_game(self.new_snake)
             while True:    # Этот цикл крутит игру
-                print(self.key_of_choise)
                 food = snake.do_step(self.new_snake, current_map, blacklist, map_lengh, map_width, food)
                 sleep(self.menu_object.difficulty)
                 self.new_snake.move()
                 if self.new_snake.bbreak:
                     break
-
-            self.new_snake = snake.Snake()
             self.menu_object.launch_game_var = False
             self.key_of_choise = 0
             self.menu_object.current_menu = menus.change_menu(self.menu_object.menu_dict, 'lose_game')
-            self.menu_object.show_menu()
+            self.menu_object.show_menu(str(self.new_snake.counter))
+            self.new_snake = snake.Snake()
         keyboard.wait('esc')
         os.system('cls')
 

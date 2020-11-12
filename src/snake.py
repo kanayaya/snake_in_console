@@ -37,7 +37,7 @@ class Snake:
             'down': [0, 1],
             'right': [1, 0],
         }
-        if key.name in managing_keys_dict:
+        if key.name in managing_keys_dict and managing_keys_dict[key.name][0] != self.direction[0] and managing_keys_dict[key.name][1] != self.direction[1]:
             self.direction = managing_keys_dict[key.name]
         else:
             pass
