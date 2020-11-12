@@ -95,7 +95,7 @@ newgame_settings_list = [
     ['Сложная', False, 0.2],
 ]
 scores_list = [
-    'Рекорды'
+    'Рекорды',
     ['Рекорды # Пока не работает', False, change_menu, 'scores'],
     ['Рекорды # Пока не работает', False, change_menu, 'scores'],
     ['Рекорды # Пока не работает', False, change_menu, 'scores'],
@@ -119,7 +119,3 @@ all_menus_dict = {
     'new_game' : newgame_settings_list,
     'lose_game' : lose_menu_list
 }
-
-if __name__ == "__main__":
-    menu_object = Menu(all_menus_dict)
-    menu_object.start()
