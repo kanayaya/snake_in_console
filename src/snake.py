@@ -59,13 +59,13 @@ def view_objects(maplist, snake, food):
     vmap[snake.head[1]][snake.head[0]] =  vmap[snake.head[1]][snake.head[0]].replace(' ', 'O')
     for i in range(len(snake.body)):
         vmap[snake.body[i][1]][snake.body[i][0]] = vmap[snake.body[i][1]][snake.body[i][0]].replace(' ', '=')
-    print(food)
     vmap[food[1]][food[0]] = vmap[food[1]][food[0]].replace(' ', 'x')
     return vmap
 
 def show_map(maplist, counter):
     """Показывает конечный вид карты в виде сетки"""
     os.system('cls')
+    print(4*'\n')
     print('Счет:  ' + str(counter))
     for i in range(len(maplist)):
         row = ''
@@ -129,9 +129,10 @@ def start_game(new_snake):
 def do_step(new_snake, current_map, blacklist, map_lengh, map_width, food):
     if new_snake.head in blacklist or new_snake.head in new_snake.body:
         new_snake.bbreak = lose_game()
+        return
     if new_snake.head == food:
         food, new_snake = food_getting(map_lengh, map_width, blacklist, new_snake)
     viewed_map = view_objects(current_map, new_snake, food)
-    print(10 * '\n')
+
     show_map(viewed_map, new_snake.counter)
     return food

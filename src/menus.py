@@ -7,6 +7,7 @@ class Menu:
         self.current_menu = change_menu(self.menu_dict, 'main_menu')
         self.launch_game_var = False
         self.difficulty = 0.2
+        self.exitvar = False
 
     def show_menu(self):
         """Показывает меню, выбранным считается пункт со вторым пунктом True"""
@@ -41,10 +42,13 @@ class Menu:
                         self.current_menu = self.current_menu[i][2](self.menu_dict, self.current_menu[i][3])
                         self.show_menu()
                         break
-                    elif len(self.current_menu[i]) == 5:
-                        self.difficulty = self.current_menu[i][4]
+                    elif len(self.current_menu[i]) == 3:
+                        self.difficulty = self.current_menu[i][2]
                         self.launch_game_var = True
                         break
+                    elif len(self.current_menu[i]) == 2:
+                        self.exitvar = True
+
 
         else:
             pass
@@ -75,19 +79,26 @@ def change_menu(menu_dict, dict_key):
 
 def exit_game(*no_args_needed_but_they_will_come):
     os.system('cls')
-    keyboard.press_and_release('Ctrl + shift + c')
+    return True
 
-
+main_menu_list = [
+    'Главное меню',
+    ['Новая игра', True, change_menu, 'new_game'],
+    ['Рекорды # Пока не работает', False, change_menu, 'scores'],
+    ['Настройки # Пока не работает', False, change_menu, 'options'],
+    ['Выход # Пока не работает', False],
+]
 newgame_settings_list = [
     'Выберите сложность:',
-    ['Лёгкая', True, 1, 1, 0.4],
-    ['Средняя', False, 1, 1, 0.3],
-    ['Сложная', False, 1, 1, 0.2],
+    ['Лёгкая', True, 0.4],
+    ['Средняя', False, 0.3],
+    ['Сложная', False, 0.2],
 ]
-lose_menu_list = [
-    'Вы проиграли, ваш счёт:   ',
-    ['Новая игра', True, change_menu, 'new_game'],
-    ['Выход', False, exit_game, 'no'],
+scores_list = [
+    'Рекорды'
+    ['Рекорды # Пока не работает', False, change_menu, 'scores'],
+    ['Рекорды # Пока не работает', False, change_menu, 'scores'],
+    ['Рекорды # Пока не работает', False, change_menu, 'scores'],
 ]
 options_menu_list = [
     'Настройки',
@@ -96,12 +107,10 @@ options_menu_list = [
     ['Настройки', False, change_menu, 'options'],
 ]
 
-main_menu_list = [
-    'Главное меню',
+lose_menu_list = [
+    'Вы проиграли, ваш счёт:   ',
     ['Новая игра', True, change_menu, 'new_game'],
-    ['Рекорды', False, change_menu, 'scores'],
-    ['Настройки', False, change_menu, 'options'],
-    ['Выход', False, exit_game, 'no'],
+    ['Выход', False],
 ]
 
 all_menus_dict = {

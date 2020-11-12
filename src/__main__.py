@@ -8,26 +8,35 @@ from . import snake
 
 class MainManager:
     def __init__(self):
+        """Сразу и конструктор и функция, запускающая игру"""
         self.menu_object = menus.Menu(menus.all_menus_dict)
         self.new_snake = snake.Snake()
         self.menu_object.show_menu()
         self.key_of_choise = 0
         keyboard.on_press(lambda key: self.choose_manager(key))
-        while True:
-            while True:
-                keyboard.wait('shift')
+        while True:    # Этот цикл позволяет начать игру и после проигрыша начать заново
+            if self.menu_object.exitvar:
+                print(111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111)
+                keyboard.press_and_release('Ctrl + Shift + c')
+            while True:    # Этот цикл проверяет, хочет ли пользователь начать игру
+                sleep(0.3)
                 if self.menu_object.launch_game_var:
                     break
+            os.system('cls')   # отсюда
+            print(10*'\n')    # Экран, просящий нажать шифт, чтобы пользователь был готов
+            print('Нажмите Shift')
+            keyboard.wait('shift')    # досюда
 
-            self.key_of_choise = 2
+            self.key_of_choise = 2    # Меняем управление меню на управление змейкой
             current_map, blacklist, map_lengh, map_width, food = snake.start_game(self.new_snake)
-            while True:
+            while True:    # Этот цикл крутит игру
                 print(self.key_of_choise)
                 food = snake.do_step(self.new_snake, current_map, blacklist, map_lengh, map_width, food)
                 sleep(self.menu_object.difficulty)
                 self.new_snake.move()
                 if self.new_snake.bbreak:
                     break
+
             self.new_snake = snake.Snake()
             self.menu_object.launch_game_var = False
             self.key_of_choise = 0
@@ -37,7 +46,8 @@ class MainManager:
         os.system('cls')
 
     def choose_manager(self, key):
-
+        """Так как считывает клавиши лишь одна функция, а управлять игрой надо двумя разными способами,
+        функцию приходится делить"""
         if self.key_of_choise == 0:
             self.menu_object.manage_menu(key)
 
