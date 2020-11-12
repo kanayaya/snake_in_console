@@ -5,11 +5,12 @@ class Menu:
     def __init__(self, menu_dict):
         self.menu_dict = menu_dict
         self.current_menu = change_menu(self.menu_dict, 'main_menu')
-        self.exitvar = False
+        self.launch_game_var = False
+        self.difficulty = 0.2
 
     def show_menu(self):
         """Показывает меню, выбранным считается пункт со вторым пунктом True"""
-        #os.system('cls')
+        os.system('cls')
         print(self.current_menu[0])
         print(10 * '\n')
         tab = 6 * '\t'
@@ -35,10 +36,15 @@ class Menu:
         elif key.name == 'enter':
             for i in range(1, len(self.current_menu)):
                 if self.current_menu[i][1]:
-                    os.system('cls')
-                    self.current_menu = self.current_menu[i][2](self.menu_dict, self.current_menu[i][3])
-                    self.show_menu()
-                    break
+                    if len(self.current_menu[i]) == 4:
+                        os.system('cls')
+                        self.current_menu = self.current_menu[i][2](self.menu_dict, self.current_menu[i][3])
+                        self.show_menu()
+                        break
+                    elif len(self.current_menu[i]) == 5:
+                        self.difficulty = self.current_menu[i][4]
+                        self.launch_game_var = True
+                        break
 
         else:
             pass
@@ -74,9 +80,9 @@ def exit_game(*no_args_needed_but_they_will_come):
 
 newgame_settings_list = [
     'Выберите сложность:',
-    ['Лёгкая', True],
-    ['Средняя', False],
-    ['Сложная', False],
+    ['Лёгкая', True, 1, 1, 0.4],
+    ['Средняя', False, 1, 1, 0.3],
+    ['Сложная', False, 1, 1, 0.2],
 ]
 lose_menu_list = [
     'Вы проиграли, ваш счёт:   ',
@@ -102,6 +108,7 @@ all_menus_dict = {
     'main_menu' : main_menu_list,
     'options' : options_menu_list,
     'new_game' : newgame_settings_list,
+    'lose_game' : lose_menu_list
 }
 
 if __name__ == "__main__":

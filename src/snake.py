@@ -65,7 +65,7 @@ def view_objects(maplist, snake, food):
 
 def show_map(maplist, counter):
     """Показывает конечный вид карты в виде сетки"""
-    #os.system('cls')
+    os.system('cls')
     print('Счет:  ' + str(counter))
     for i in range(len(maplist)):
         row = ''
@@ -93,11 +93,7 @@ def food_getting(map_lengh, map_width, blacklist, snake):
 
 def lose_game():
     """Действие при столкновении головы с препятствием или телом змейки"""
-    os.system('cls')
-    print(20 * '\n')
-    print(7 * '\t' + 'Проиграл))))')
-    print(10 * '\n')
-    sys.exit()
+    return True
 
 def start_game(new_snake):
     first_map = '1 1 1 1 1 1 1 1 1 1,\
@@ -132,7 +128,7 @@ def start_game(new_snake):
 
 def do_step(new_snake, current_map, blacklist, map_lengh, map_width, food):
     if new_snake.head in blacklist or new_snake.head in new_snake.body:
-        lose_game()
+        new_snake.bbreak = lose_game()
     if new_snake.head == food:
         food, new_snake = food_getting(map_lengh, map_width, blacklist, new_snake)
     viewed_map = view_objects(current_map, new_snake, food)
