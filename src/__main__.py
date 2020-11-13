@@ -15,18 +15,18 @@ class MainManager:
         self.key_of_choise = 0
         keyboard.on_press(lambda key: self.choose_manager(key))
         while True:    # Этот цикл позволяет начать игру и после проигрыша начать заново
-            while True:    # Этот цикл проверяет, хочет ли пользователь начать игру
+            while True:    # Этот цикл проверяет, хочет ли пользователь начать игру или выйти
                 sleep(0.3)
                 if self.menu_object.exitvar:
                     keyboard.press_and_release('alt + f4')
                 if self.menu_object.launch_game_var:
                     break
+            self.key_of_choise = 2    # Меняем управление меню на управление змейкой
             os.system('cls')   # отсюда
             print(10*'\n')    # Экран, просящий нажать шифт, чтобы пользователь был готов
             print('Нажмите Shift')
             keyboard.wait('shift')    # досюда
 
-            self.key_of_choise = 2    # Меняем управление меню на управление змейкой
             current_map, blacklist, map_lengh, map_width, food = snake.start_game(self.new_snake)
             while True:    # Этот цикл крутит игру
                 food = snake.do_step(self.new_snake, current_map, blacklist, map_lengh, map_width, food)

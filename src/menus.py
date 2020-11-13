@@ -86,22 +86,14 @@ def exit_game(*no_args_needed_but_they_will_come):
 main_menu_list = [
     'Главное меню',
     ['Новая игра', True, change_menu, 'new_game'],
-    ['Настройки # Пока не работает', False, change_menu, 'options'],
     ['Выход', False],
 ]
 newgame_settings_list = [
     'Выберите сложность:',
-    ['Лёгкая', True, 0.4],
-    ['Средняя', False, 0.3],
-    ['Сложная', False, 0.2],
+    ['Лёгкая', True, 0.3],
+    ['Средняя', False, 0.2],
+    ['Сложная', False, 0.1],
 ]
-options_menu_list = [
-    'Настройки',
-    ['Настройки', True, change_menu, 'options'],
-    ['Настройки', False, change_menu, 'options'],
-    ['Настройки', False, change_menu, 'options'],
-]
-
 lose_menu_list = [
     'Вы проиграли, ваш счёт:   ',
     ['Новая игра', True, change_menu, 'new_game'],
@@ -110,7 +102,6 @@ lose_menu_list = [
 
 all_menus_dict = {
     'main_menu' : main_menu_list,
-    'options' : options_menu_list,
     'new_game' : newgame_settings_list,
     'lose_game' : lose_menu_list
 }
