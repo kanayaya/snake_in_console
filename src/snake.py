@@ -1,44 +1,38 @@
 import copy
 import sys, os
 import random
-from time import sleep
 
 
 class Snake:
     def __init__(self):
         self.head = [3, 1]
         self.body = [[2, 1], [1, 1]]
-        self.direction = [1, 0]# -- вправо, [0, 1] -- вниз, [-1, 0] -- влево, [0, -1] -- вверх
+        self.current_direction = [1, 0]# -- вправо, [0, 1] -- вниз, [-1, 0] -- влево, [0, -1] -- вверх
+        self.next_direction = [1, 0]
         self.bbreak = False
         self.counter = 0
 
     def move(self):
-        '''Приравнивает координаты сзадистоящих блоков тела к впередистоящим.
+        """Приравнивает координаты сзадистоящих блоков тела к впередистоящим.
         координаты самого переднего блока приравнивает к координатам головы,
         а координаты головы модифицирует с помощью переменной direction.
-        По умолчанию вправо.'''
+        По умолчанию вправо."""
         for i in range((len(self.body) - 1), 0, -1):
             self.body[i] = self.body[i - 1]
         self.body[0] = self.head
-        self.head = [(self.head[0]+self.direction[0]), (self.head[1]+self.direction[1])]
+        self.current_direction = self.next_direction
+        self.head = [(self.head[0]+self.current_direction[0]), (self.head[1]+self.current_direction[1])]
 
     def manage(self, key):
         managing_keys_dict = {
-            'w' : [0, -1],
-            'a' : [-1, 0],
-            's' : [0, 1],
-            'd' : [1, 0],
-            'ц': [0, -1],
-            'ф': [-1, 0],
-            'ы': [0, 1],
-            'в': [1, 0],
-            'up': [0, -1],
-            'left': [-1, 0],
-            'down': [0, 1],
-            'right': [1, 0],
+            'up': [0, -1],    'w' : [0, -1], 'ц' : [0, -1],
+            'left' : [-1, 0], 'a' : [-1, 0], 'ф' : [-1, 0],
+            'down' : [0, 1],  's' : [0, 1],  'ы' : [0, 1],
+            'right' : [1, 0], 'd' : [1, 0],  'в' : [1, 0],
         }
-        if key.name in managing_keys_dict and managing_keys_dict[key.name][0] != self.direction[0] and managing_keys_dict[key.name][1] != self.direction[1]:
-            self.direction = managing_keys_dict[key.name]
+        if key.name in managing_keys_dict and managing_keys_dict[key.name][0] != self.current_direction[0] \
+                and managing_keys_dict[key.name][1] != self.current_direction[1]:
+            self.next_direction = managing_keys_dict[key.name]
         else:
             pass
 

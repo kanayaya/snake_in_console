@@ -37,26 +37,17 @@ class Menu:
         elif key.name == 'enter':
             for i in range(1, len(self.current_menu)):
                 if self.current_menu[i][1]:
-                    if len(self.current_menu[i]) == 4:
-                        os.system('cls')
-                        self.current_menu = self.current_menu[i][2](self.menu_dict, self.current_menu[i][3])
-                        self.show_menu(' ')
-                        break
-                    elif len(self.current_menu[i]) == 3:
-                        self.difficulty = self.current_menu[i][2]
-                        self.launch_game_var = True
-                        break
-                    elif len(self.current_menu[i]) == 2:
-                        self.exitvar = True
-                        #os.system('cls')
-                        #sys.exit()
+                    self.select_position(i)
 
+        elif key.name == 'esc':
+            self.select_position(-1)
+            pass
 
         else:
             pass
 
     def change_position(self, menu_keys_dict, key):
-        """Меняет позицию выбора в менюшке, перетаскивая '> <' по пунктам"""
+        """Меняет позицию выбора в меню, перетаскивая '> <' по пунктам"""
         position = 0
         for i in range(len(self.current_menu)):
             if self.current_menu[i][1]:
@@ -76,12 +67,23 @@ class Menu:
 
         return  self.current_menu
 
+    def select_position(self, position):
+        if len(self.current_menu[position]) == 4:
+            os.system('cls')
+            self.current_menu = self.current_menu[position][2](self.menu_dict, self.current_menu[position][3])
+            self.show_menu(' ')
+            return
+        elif len(self.current_menu[position]) == 3:
+            self.difficulty = self.current_menu[position][2]
+            self.launch_game_var = True
+            return
+        elif len(self.current_menu[position]) == 2:
+            self.exitvar = True
+            return
+
+
 def change_menu(menu_dict, dict_key):
     return menu_dict[dict_key]
-
-def exit_game(*no_args_needed_but_they_will_come):
-    os.system('cls')
-    return True
 
 main_menu_list = [
     'Главное меню',
@@ -93,6 +95,7 @@ newgame_settings_list = [
     ['Лёгкая', True, 0.3],
     ['Средняя', False, 0.2],
     ['Сложная', False, 0.1],
+    ['Назад', False, change_menu, 'main_menu'],
 ]
 lose_menu_list = [
     'Вы проиграли, ваш счёт:   ',

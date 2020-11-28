@@ -39,8 +39,6 @@ class MainManager:
             self.menu_object.current_menu = menus.change_menu(self.menu_object.menu_dict, 'lose_game')
             self.menu_object.show_menu(str(self.new_snake.counter))
             self.new_snake = snake.Snake()
-        keyboard.wait('esc')
-        os.system('cls')
 
     def choose_manager(self, key):
         """Так как считывает клавиши лишь одна функция, а управлять игрой надо двумя разными способами,
