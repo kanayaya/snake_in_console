@@ -37,7 +37,8 @@ class MainManager:
             self.menu_object.launch_game_var = False
             self.key_of_choise = 0
             self.menu_object.current_menu = menus.change_menu(self.menu_object.menu_dict, 'lose_game')
-            self.menu_object.show_menu(str(self.new_snake.counter))
+            self.menu_object.counter = self.new_snake.counter
+            self.menu_object.show_menu(str(self.menu_object.counter))
             self.new_snake = snake.Snake()
 
     def choose_manager(self, key):

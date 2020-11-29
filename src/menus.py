@@ -1,4 +1,4 @@
-import os, sys
+import os
 
 
 class Menu:
@@ -8,11 +8,12 @@ class Menu:
         self.launch_game_var = False
         self.difficulty = 0.2
         self.exitvar = False
+        self.counter = 0
 
     def show_menu(self, score):
         """Показывает меню, выбранным считается пункт со вторым пунктом True"""
         os.system('cls')
-        print(self.current_menu[0] + '  ' + score)
+        print(self.current_menu[0] + '  ' + str(score))
         print(10 * '\n')
         tab = 6 * '\t'
         for i in range(1, len(self.current_menu)):
@@ -32,7 +33,10 @@ class Menu:
         }
         if key.name in menu_keys_dict:
             self.current_menu = self.change_position(menu_keys_dict, key)
-            self.show_menu(' ')
+            if self.current_menu == lose_menu_list:
+                self.show_menu(self.counter)
+            else:
+                self.show_menu(' ')
 
         elif key.name == 'enter':
             for i in range(1, len(self.current_menu)):
